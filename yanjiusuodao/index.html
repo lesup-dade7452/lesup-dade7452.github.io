@@ -1,0 +1,1357 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>研究所导航-科研机构推荐_研究所分类目录与资源索引</title>
+  <meta name="description" content="研究所导航：一站式科研机构索引与资源聚合页，涵盖中科院、社科院、高校研究所、企业实验室等分类导航，提供热门研究所推荐、最新科研动态、深度解析与常见问题，帮助快速定位研究方向与机构信息。">
+  <meta name="keywords" content="研究所导航,科研机构导航,研究所分类目录,中科院研究所,社会研究所">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%236a5acd%22/%3E%3Ctext x=%2250%22 y=%2267%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22%3E研%3C/text%3E%3C/svg%3E">
+  <style>
+    /* ===== 全局变量与重置 ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0e1117;
+      --bg-card: #1a1e26;
+      --bg-elevated: #222730;
+      --border-subtle: #2c313c;
+      --text-primary: #e8edf5;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8f;
+      --accent: #6a5acd;
+      --accent-glow: #8a7ae8;
+      --accent-soft: #2d2a4a;
+      --neon-cyan: #4fd1c5;
+      --neon-pink: #ed64a6;
+      --neon-orange: #f6ad55;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-hover: 0 12px 32px rgba(106, 90, 205, 0.25);
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 0 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s, opacity 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent-glow);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    ul,
+    ol {
+      list-style: none;
+    }
+
+    /* ===== 通用布局 ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .section:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-glow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section-more {
+      font-size: 0.9rem;
+      color: var(--accent-glow);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 16px;
+      border-radius: 50px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .section-more:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    /* ===== 导航 ===== */
+    .nav-main {
+      background: rgba(14, 17, 23, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--neon-cyan));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(106, 90, 205, 0.5);
+    }
+
+    .logo-text span {
+      color: var(--accent-glow);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links a {
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      border-bottom-color: var(--accent);
+    }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50px;
+      padding: 6px 6px 6px 16px;
+      min-width: 220px;
+    }
+
+    .nav-search input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      width: 100%;
+      padding: 4px 0;
+    }
+
+    .nav-search input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .nav-search button {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      border-radius: 50px;
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .nav-search button:hover {
+      background: var(--accent-glow);
+    }
+
+    /* ===== Banner ===== */
+    .hero-banner {
+      background: radial-gradient(ellipse at 20% 30%, rgba(106, 90, 205, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(79, 209, 197, 0.15) 0%, transparent 50%);
+      padding: 56px 0 48px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .hero-content {
+      max-width: 860px;
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--accent-glow), var(--neon-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-bottom: 12px;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(106, 90, 205, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(106, 90, 205, 0.5);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 12px 24px;
+      border-radius: 50px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .hero-tag {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .hero-tag:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ===== 卡片网格 ===== */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent);
+    }
+
+    .card-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag-pill {
+      font-size: 0.7rem;
+      padding: 2px 10px;
+      border-radius: 50px;
+      background: var(--accent-soft);
+      color: var(--accent-glow);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .tag-pill.cyan {
+      background: rgba(79, 209, 197, 0.15);
+      color: var(--neon-cyan);
+    }
+
+    .tag-pill.pink {
+      background: rgba(237, 100, 166, 0.15);
+      color: var(--neon-pink);
+    }
+
+    .tag-pill.orange {
+      background: rgba(246, 173, 85, 0.15);
+      color: var(--neon-orange);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: #fff;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+      margin-top: 6px;
+    }
+
+    .card-meta .hot {
+      color: var(--neon-orange);
+      font-weight: 600;
+    }
+
+    /* ===== 最新动态列表 ===== */
+    .update-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .update-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.2s;
+    }
+
+    .update-item:last-child {
+      border-bottom: none;
+    }
+
+    .update-item:hover {
+      background: rgba(255, 255, 255, 0.02);
+      padding-left: 8px;
+      padding-right: 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .update-time {
+      flex-shrink: 0;
+      width: 90px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      padding-top: 3px;
+    }
+
+    .update-content {
+      flex: 1;
+    }
+
+    .update-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .update-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== 分类入口 ===== */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 14px;
+    }
+
+    .category-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 18px 12px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .category-item:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ===== 深度解析正文 ===== */
+    .article-body {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .article-body h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 32px 0 14px;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .article-body h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .article-body p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      line-height: 1.8;
+    }
+
+    .article-body strong {
+      color: var(--accent-glow);
+      font-weight: 600;
+    }
+
+    .article-body .insight-box {
+      background: var(--bg-card);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 24px 0;
+    }
+
+    .article-body .insight-box p {
+      margin-bottom: 0;
+      color: var(--text-primary);
+      font-size: 0.98rem;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--accent);
+    }
+
+    .faq-question {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+      color: #fff;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .faq-question .q-icon {
+      color: var(--accent-glow);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .faq-answer {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      padding-left: 26px;
+    }
+
+    /* ===== 用户评论 ===== */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+
+    .comment-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      transition: border-color 0.2s;
+    }
+
+    .comment-card:hover {
+      border-color: var(--accent);
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .comment-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--neon-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .comment-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #fff;
+    }
+
+    .comment-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .comment-text {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===== 资讯卡片 ===== */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .news-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    .news-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .news-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .news-summary {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ===== 页脚 ===== */
+    .footer {
+      background: #0a0c10;
+      border-top: 1px solid var(--border-subtle);
+      padding: 48px 0 32px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 36px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-col ul li a:hover {
+      color: var(--accent-glow);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.8rem;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .nav-search {
+        min-width: 100%;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .comment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .update-item {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .update-time {
+        width: auto;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        text-align: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.6rem;
+      }
+
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section {
+        padding: 32px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== 导航 ===== -->
+  <nav class="nav-main" id="nav-main">
+    <div class="container nav-inner">
+      <a href="/#nav-main" class="logo-badge" aria-label="研究所导航首页">
+        <span class="logo-icon">研</span>
+        <span class="logo-text">研究所<span>导航</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="/#hero-banner">首页</a>
+        <a href="/#hot-recommend">热门推荐</a>
+        <a href="/#latest-updates">最新动态</a>
+        <a href="/#category-entry">分类目录</a>
+        <a href="/#deep-analysis">深度解析</a>
+        <a href="/#faq-section">常见问题</a>
+        <a href="/#user-comments">用户评论</a>
+        <a href="/#related-news">资讯</a>
+      </div>
+      <div class="nav-search">
+        <input type="text" placeholder="搜索研究所、科研方向、机构…" aria-label="搜索研究所">
+        <button type="button">搜索</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== 首屏 Banner ===== -->
+  <section class="hero-banner" id="hero-banner">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="highlight">研究所导航</span> — 科研机构一站式索引与资源聚合
+        </h1>
+        <p class="hero-desc">
+          整合中科院、社科院、高校研究所、企业实验室等各类科研机构信息，按学科、地域、类型多维分类，提供热门研究所推荐与最新科研动态追踪。
+        </p>
+        <p class="hero-sub">
+          无论你是考研择校、科研合作、项目申报还是行业调研，都能在研究所导航中快速定位目标机构与研究方向。
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" type="button">开始探索 →</button>
+          <button class="btn-ghost" type="button">查看分类目录</button>
+        </div>
+        <div class="hero-tags">
+          <a href="/#category-entry" class="hero-tag">中科院系统</a>
+          <a href="/#category-entry" class="hero-tag">社科院系统</a>
+          <a href="/#category-entry" class="hero-tag">高校研究所</a>
+          <a href="/#category-entry" class="hero-tag">企业实验室</a>
+          <a href="/#category-entry" class="hero-tag">医学研究所</a>
+          <a href="/#category-entry" class="hero-tag">工程与材料</a>
+          <a href="/#category-entry" class="hero-tag">人工智能</a>
+          <a href="/#category-entry" class="hero-tag">能源环境</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 内容简介 ===== -->
+  <section class="section" id="intro-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">关于研究所导航</h2>
+        <a href="/#hot-recommend" class="section-more">浏览推荐 →</a>
+      </div>
+      <div class="article-body" style="max-width:100%;">
+        <p>
+          <strong>研究所导航</strong>是一个面向科研人员、考研学生、产业分析师和科技爱好者的垂直索引平台。它解决的核心问题是：在庞杂的科研机构体系中，快速找到与自身需求匹配的研究所——无论是学术深造、课题合作、技术转化还是行业调研。很多人在搜索引擎中检索“研究所”时，往往得到零散的结果，而<strong>研究所导航</strong>通过系统化分类与结构化呈现，将分散的信息聚合为可浏览、可筛选、可对比的目录。
+        </p>
+        <p>
+          这个页面适合以下人群：准备考研或申请博士、需要了解目标研究所的招生方向与导师资源的学生；从事产学研合作、寻找技术对接实验室的企业研发人员；关注科技政策与科研动态的媒体从业者；以及希望系统了解中国科研体系布局的普通读者。研究所导航不仅提供机构名称与链接，更从学科归属、地域分布、机构类型等维度进行拆解，帮助读者建立对科研机构生态的整体认知。
+        </p>
+        <p>
+          为什么值得收藏？因为科研机构的组织架构、研究方向、招生政策都在动态变化中，<strong>研究所导航</strong>以专题页的形式持续追踪热门研究所的最新动态，并定期更新分类索引。你可以把它当作一个科研领域的“起始页”，从这里出发，快速跳转到具体机构官网、招生页面或学术资源库，节省反复搜索和比对的时间。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 热门推荐 ===== -->
+  <section class="section" id="hot-recommend">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">热门研究所推荐</h2>
+        <a href="/#category-entry" class="section-more">全部分类 →</a>
+      </div>
+      <div class="card-grid">
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill">中科院</span>
+            <span class="tag-pill cyan">物理</span>
+            <span class="tag-pill orange">北京</span>
+          </div>
+          <h3 class="card-title">中国科学院物理研究所</h3>
+          <p class="card-desc">国内凝聚态物理与材料物理研究的顶尖机构，拥有多个国家重点实验室，在超导、磁学、纳米材料领域成果丰硕。</p>
+          <div class="card-meta"><span>⭐ 9.8</span><span class="hot">热度 12.3万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill">社科院</span>
+            <span class="tag-pill pink">经济</span>
+            <span class="tag-pill cyan">北京</span>
+          </div>
+          <h3 class="card-title">中国社会科学院经济研究所</h3>
+          <p class="card-desc">专注宏观经济、制度经济学与经济发展战略研究，长期为国家经济政策提供学术支持，是经济学研究者重要参考机构。</p>
+          <div class="card-meta"><span>⭐ 9.6</span><span class="hot">热度 9.8万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill orange">AI</span>
+            <span class="tag-pill">高校</span>
+            <span class="tag-pill cyan">北京</span>
+          </div>
+          <h3 class="card-title">清华大学人工智能研究院</h3>
+          <p class="card-desc">依托清华多学科优势，聚焦机器学习、计算机视觉、自然语言处理等方向，与产业界合作紧密，学术影响力突出。</p>
+          <div class="card-meta"><span>⭐ 9.7</span><span class="hot">热度 11.2万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill">中科院</span>
+            <span class="tag-pill cyan">生物</span>
+            <span class="tag-pill pink">上海</span>
+          </div>
+          <h3 class="card-title">中国科学院分子细胞科学卓越创新中心</h3>
+          <p class="card-desc">生命科学领域标杆机构，在基因编辑、细胞信号传导、肿瘤生物学等方面具有国际影响力，实验平台先进。</p>
+          <div class="card-meta"><span>⭐ 9.5</span><span class="hot">热度 8.6万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill pink">医学</span>
+            <span class="tag-pill">企业</span>
+            <span class="tag-pill orange">深圳</span>
+          </div>
+          <h3 class="card-title">深圳华大生命科学研究院</h3>
+          <p class="card-desc">以基因组学为核心的民办科研机构，在测序技术、生物信息、精准医疗方向具备全链条研发能力，产业转化活跃。</p>
+          <div class="card-meta"><span>⭐ 9.3</span><span class="hot">热度 7.9万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill orange">能源</span>
+            <span class="tag-pill cyan">工程</span>
+            <span class="tag-pill">大连</span>
+          </div>
+          <h3 class="card-title">中国科学院大连化学物理研究所</h3>
+          <p class="card-desc">催化化学、燃料电池、储能技术领域的国家级研究机构，多项成果实现产业化，在洁净能源方向布局深厚。</p>
+          <div class="card-meta"><span>⭐ 9.4</span><span class="hot">热度 8.2万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill">社科院</span>
+            <span class="tag-pill pink">社会</span>
+            <span class="tag-pill cyan">北京</span>
+          </div>
+          <h3 class="card-title">中国社会科学院社会学研究所</h3>
+          <p class="card-desc">中国社会学研究的核心机构之一，关注社会分层、城乡发展、家庭变迁等议题，定期发布权威社会调查数据。</p>
+          <div class="card-meta"><span>⭐ 9.2</span><span class="hot">热度 6.5万</span></div>
+        </article>
+        <article class="card-item">
+          <div class="card-tag-row">
+            <span class="tag-pill cyan">环境</span>
+            <span class="tag-pill orange">高校</span>
+            <span class="tag-pill">南京</span>
+          </div>
+          <h3 class="card-title">南京大学环境科学研究所</h3>
+          <p class="card-desc">在水污染控制、大气环境化学、生态修复等方向积累深厚，承担多项国家重大科研项目，学术与政策影响力并重。</p>
+          <div class="card-meta"><span>⭐ 9.1</span><span class="hot">热度 5.8万</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 最新动态 ===== -->
+  <section class="section" id="latest-updates">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">最新科研动态与更新</h2>
+        <a href="/#related-news" class="section-more">更多资讯 →</a>
+      </div>
+      <div class="update-list">
+        <div class="update-item">
+          <span class="update-time">2026-11-07</span>
+          <div class="update-content">
+            <div class="update-title">中科院物理所发布新型超导材料研究进展</div>
+            <div class="update-desc">在镍基超导薄膜方向取得突破，相关成果发表于国际学术期刊，为高温超导机理研究提供新思路。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-06</span>
+          <div class="update-content">
+            <div class="update-title">清华大学人工智能研究院公布2027年博士招生方向</div>
+            <div class="update-desc">新增“具身智能”与“AI for Science”交叉方向，面向计算机、自动化、数学等背景学生开放申请。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-05</span>
+          <div class="update-content">
+            <div class="update-title">社科院经济研究所发布三季度宏观经济分析报告</div>
+            <div class="update-desc">报告指出消费复苏与制造业投资回暖趋势，并对明年政策走向提出研判，全文可在官网下载。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-04</span>
+          <div class="update-content">
+            <div class="update-title">大连化物所储能技术中试基地正式启用</div>
+            <div class="update-desc">聚焦液流电池与固态电池工程化验证，将为新能源企业提供技术熟化与检测服务。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-03</span>
+          <div class="update-content">
+            <div class="update-title">华大生命科学研究院启动万种微生物基因组计划</div>
+            <div class="update-desc">联合多国科研机构，构建全球微生物基因资源数据库，推动生物医药与农业应用。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-02</span>
+          <div class="update-content">
+            <div class="update-title">社科院社会学所发布中国家庭追踪调查最新数据</div>
+            <div class="update-desc">覆盖全国2万余户家庭的追踪数据上线，涵盖收入、教育、健康等维度，供学术研究申请使用。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-11-01</span>
+          <div class="update-content">
+            <div class="update-title">南京大学环境科学研究所举办水环境治理国际研讨会</div>
+            <div class="update-desc">来自12个国家的学者围绕流域污染控制与生态修复展开交流，并签署多项合作备忘录。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">2026-10-31</span>
+          <div class="update-content">
+            <div class="update-title">中科院分子细胞卓越中心开放2027年大学生夏令营报名</div>
+            <div class="update-desc">面向生物、医学、化学相关专业本科生，提供实验室轮转与导师面对面交流机会。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 分类入口 ===== -->
+  <section class="section" id="category-entry">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">研究所分类目录</h2>
+        <span class="section-more">按需筛选</span>
+      </div>
+      <div class="category-grid">
+        <a href="/#hot-recommend" class="category-item">中科院系统</a>
+        <a href="/#hot-recommend" class="category-item">社科院系统</a>
+        <a href="/#hot-recommend" class="category-item">高校研究所</a>
+        <a href="/#hot-recommend" class="category-item">企业实验室</a>
+        <a href="/#hot-recommend" class="category-item">医学与生命科学</a>
+        <a href="/#hot-recommend" class="category-item">工程与材料</a>
+        <a href="/#hot-recommend" class="category-item">人工智能与信息</a>
+        <a href="/#hot-recommend" class="category-item">能源与环境</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 深度解析 ===== -->
+  <section class="section" id="deep-analysis">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">深度解析：如何用好研究所导航</h2>
+      </div>
+      <div class="article-body">
+        <p>
+          搜索“研究所导航”的人，背后往往有非常具体的需求。有人是考研择校阶段，想横向对比不同研究所的学科方向与招生门槛；有人是企业研发负责人，需要找到某个细分技术领域的对口实验室；还有人只是好奇中国科研体系到底包含哪些类型的机构。这个页面试图覆盖这些不同层次的需求，从导航索引的视角，把科研机构信息组织成可读、可查、可比较的结构。
+        </p>
+        <h3>研究所类型的多维划分</h3>
+        <p>
+          中国的研究所体系大致可以分为几个板块：<strong>中科院系统</strong>（中国科学院下属百余个研究所，覆盖自然科学全领域）、<strong>社科院系统</strong>（中国社会科学院及地方社科院，侧重人文与社会科学）、<strong>高校研究所</strong>（依托重点大学设立的各类研究院或研究中心）、<strong>企业/民办科研机构</strong>（如华大研究院、各企业中央研究院等），以及<strong>部委直属研究所</strong>（如中国农科院、中国医科院等）。不同类型的机构在运行机制、经费来源、招生方式上差异很大，研究所导航的分类入口正是帮助读者快速区分这些板块。
+        </p>
+        <h3>内容吸引点与使用场景</h3>
+        <p>
+          这个导航页的内容吸引力不在于单篇深度长文，而在于“索引价值”——它把分散的机构信息聚合到同一个页面，并通过标签体系（学科、地域、类型、热度）让读者可以在几分钟内形成对某个领域的机构分布认知。对于考研学生，可以重点关注招生方向与导师介绍；对于产业研究者，可以关注技术转化与产学研合作活跃的机构；对于政策观察者，社科院系统的研究所动态是重要参考。不同读者各取所需，这正是导航页的实用之处。
+        </p>
+        <div class="insight-box">
+          <p><strong>使用建议：</strong>建议先通过分类目录定位大类，再结合热门推荐中的标签与简介缩小范围，最后跳转至机构官网核实招生简章或合作需求。研究所导航作为“起点页”，不替代官方信息，但能显著减少前期检索时间。</p>
+        </div>
+        <h3>与同类内容相比的差异</h3>
+        <p>
+          市面上很多科研机构列表停留在静态链接汇总，更新慢且缺乏结构化标签。研究所导航更强调“活”的索引：热门推荐会随科研动态调整，最新动态模块持续追踪机构新闻，FAQ与用户评论则反映真实读者的关注点。这种组合让页面不仅是导航工具，也带有一定的社区感和内容消费属性。当然，页面并不追求大而全地收录所有机构，而是聚焦在具有代表性、搜索热度较高、信息相对透明的研究所，保证每一条索引都有足够的参考价值。
+        </p>
+        <h3>适合谁收藏</h3>
+        <p>
+          如果你正在规划科研路径、寻找合作机构、做行业技术调研，或者单纯想了解中国科研力量的地域与学科分布，这个页面的信息组织方式都能帮到你。建议将研究所导航加入浏览器书签，在需要时快速打开，通过分类与标签直达目标板块。后续我们也会根据用户反馈持续优化分类维度与推荐逻辑，让导航体验更贴近真实使用场景。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section" id="faq-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">常见问题</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question"><span class="q-icon">Q</span>研究所导航收录了哪些类型的研究所？</div>
+          <div class="faq-answer">目前主要覆盖中科院系统、社科院系统、高校研究所、企业及民办科研机构、部委直属研究院等类别，涉及自然科学、工程技术、医学生命科学、人文社科等主要学科方向。分类入口按机构类型和学科领域双重维度组织，方便不同需求的读者快速定位。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="q-icon">Q</span>考研择校时如何利用这个导航页？</div>
+          <div class="faq-answer">建议先通过分类目录找到目标学科对应的研究所类别，再浏览热门推荐中的机构简介与标签，重点关注研究方向与招生信息。每个机构的卡片都标注了地域与学科标签，可以快速筛选出符合你报考区域和兴趣方向的选项，然后跳转官网查看最新招生简章。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="q-icon">Q</span>企业找技术合作，研究所导航能提供什么帮助？</div>
+          <div class="faq-answer">导航页的机构简介中会标注技术转化活跃度、重点实验室信息以及产学研合作方向。企业研发人员可以通过分类目录定位到工程、材料、人工智能、能源环境等应用导向的研究所，再结合最新动态了解其近期成果与合作需求，作为技术对接的初步筛选依据。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="q-icon">Q</span>研究所导航的信息多久更新一次？</div>
+          <div class="faq-answer">热门推荐与最新动态模块保持较高更新频率，通常每周会有新内容补充，重要科研进展会及时纳入。分类目录与机构简介也会根据公开信息定期校订。如果发现信息滞后，欢迎通过页面底部的反馈渠道提醒我们修正。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="q-icon">Q</span>除了中科院，还有哪些值得关注的研究所体系？</div>
+          <div class="faq-answer">社科院的各专业研究所（经济、社会学、法学等）在人文社科领域权威性很高；高校研究所如清华人工智能研究院、南大环境科学研究所等依托大学多学科资源，交叉研究活跃；企业研究院如华大生命科学研究院在产业化方面优势明显。建议根据你的具体需求选择关注方向。</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question"><span class="q-icon">Q</span>如何判断一个研究所是否适合自己？</div>
+          <div class="faq-answer">可以从四个维度考量：研究方向是否匹配你的兴趣或业务需求、机构类型决定运行机制与资源特点、地域因素影响生活与就业、招生或合作门槛是否在可接受范围。研究所导航的标签体系可以帮助你从这几个维度进行初步对比，但最终决策建议结合官网信息与在读学生/合作方的真实反馈。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 用户评论 ===== -->
+  <section class="section" id="user-comments">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">用户评论与讨论</h2>
+        <span class="section-more">最近30天</span>
+      </div>
+      <div class="comment-grid">
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">林</div>
+              <div><div class="comment-name">林深见鹿</div><div class="comment-date">2026-11-06</div></div>
+            </div>
+          </div>
+          <div class="comment-text">用这个导航找中科院各所方便多了，之前一个个搜官网太麻烦。分类标签做得不错，希望以后能加上各所的重点实验室介绍。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">陈</div>
+              <div><div class="comment-name">陈默是金</div><div class="comment-date">2026-11-05</div></div>
+            </div>
+          </div>
+          <div class="comment-text">社科院经济所的报告真的值得追，导航页收录得挺及时。不过社科院系统其他所（比如法学所、世经所）能不能也加进来？</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">王</div>
+              <div><div class="comment-name">王小明考研版</div><div class="comment-date">2026-11-04</div></div>
+            </div>
+          </div>
+          <div class="comment-text">考研党路过，这个页面帮我快速对比了物理所和清华人工智能研究院的方向，省了不少时间。就是招生信息如果能直接标注年份就更好了。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">赵</div>
+              <div><div class="comment-name">赵小刀</div><div class="comment-date">2026-11-03</div></div>
+            </div>
+          </div>
+          <div class="comment-text">企业实验室那块分类有点少，建议多收录一些大厂的中央研究院，比如华为、阿里的研究机构，现在做技术合作经常用到。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">周</div>
+              <div><div class="comment-name">周周不加班</div><div class="comment-date">2026-11-02</div></div>
+            </div>
+          </div>
+          <div class="comment-text">整体结构清晰，移动端看也不乱。热门推荐里的简介写得比较克制，没有夸张宣传，这点好评。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">吴</div>
+              <div><div class="comment-name">吴所谓</div><div class="comment-date">2026-11-01</div></div>
+            </div>
+          </div>
+          <div class="comment-text">深度解析那段写得挺实在的，没有灌水。不过感觉“研究所导航”这个页面还可以增加一个按城市筛选的功能，方便看本地有哪些研究所。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">郑</div>
+              <div><div class="comment-name">郑在输入中</div><div class="comment-date">2026-10-30</div></div>
+            </div>
+          </div>
+          <div class="comment-text">最新动态更新挺快，大连化物所储能中试基地那条我正好在关注，点进来就看到汇总了，省得去翻官网。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">孙</div>
+              <div><div class="comment-name">孙悟饭的饭</div><div class="comment-date">2026-10-29</div></div>
+            </div>
+          </div>
+          <div class="comment-text">评论一下分类入口：8个分类感觉还能再细一点，比如医学和生命科学可以拆成基础医学、临床医学、药学，不然点进去还是得自己找。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">李</div>
+              <div><div class="comment-name">李不白</div><div class="comment-date">2026-10-28</div></div>
+            </div>
+          </div>
+          <div class="comment-text">作为一个社科研究者，看到社科院社会学所被收录挺开心的。希望以后多推一些地方社科院，比如上海社科院、广东社科院，区域研究用得上。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">韩</div>
+              <div><div class="comment-name">韩梅梅</div><div class="comment-date">2026-10-27</div></div>
+          </div>
+          </div>
+          <div class="comment-text">页面加载速度不错，在手机上看也不卡。建议热门推荐可以加一个“最近浏览”记录功能，不然每次都要重新翻。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">刘</div>
+              <div><div class="comment-name">刘看山</div><div class="comment-date">2026-10-25</div></div>
+            </div>
+          </div>
+          <div class="comment-text">深度解析里提到“研究所导航不追求大而全”，这个定位很清醒。现在很多导航站收录一堆死链，不如像这样精选更新。</div>
+        </div>
+        <div class="comment-card">
+          <div class="comment-header">
+            <div class="comment-user">
+              <div class="avatar">黄</div>
+              <div><div class="comment-name">黄小仙</div><div class="comment-date">2026-10-22</div></div>
+            </div>
+          </div>
+          <div class="comment-text">希望能增加一个“对比”功能，勾选两三个研究所横向看研究方向、地域、招生人数，考研择校会非常实用。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 相关资讯 ===== -->
+  <section class="section" id="related-news">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">相关资讯</h2>
+        <a href="/#latest-updates" class="section-more">更多动态 →</a>
+      </div>
+      <div class="news-grid">
+        <article class="news-card">
+          <div class="news-date">2026-11-07</div>
+          <h3 class="news-title">中科院发布“十四五”科研机构评估结果，多家研究所获评优秀</h3>
+          <p class="news-summary">评估覆盖物理、化学、生物、地学等领域，强调原始创新与成果转化双重导向，为科研机构导航提供参考维度。</p>
+        </article>
+        <article class="news-card">
+          <div class="news-date">2026-11-05</div>
+          <h3 class="news-title">2027年考研报名在即，科研院所与高校如何选择？</h3>
+          <p class="news-summary">从培养模式、导师资源、生活补助、就业方向四个角度对比研究所与高校的差异，帮助考生做出更适合自己的选择。</p>
+        </article>
+        <article class="news-card">
+          <div class="news-date">2026-11-03</div>
+          <h3 class="news-title">企业研究院加速布局AI for Science，产学研合作模式生变</h3>
+          <p class="news-summary">多家头部企业研究院与中科院、高校研究所共建联合实验室，科研导航中的企业实验室分类关注度持续上升。</p>
+        </article>
+        <article class="news-card">
+          <div class="news-date">2026-11-01</div>
+          <h3 class="news-title">社科院系统启动新一轮创新工程，聚焦国家治理与数字经济</h3>
+          <p class="news-summary">涉及经济所、社会学所、法学所等多个研究所，相关课题招标信息将在各所官网陆续发布，值得研究者关注。</p>
+        </article>
+        <article class="news-card">
+          <div class="news-date">2026-10-29</div>
+          <h3 class="news-title">高校研究所开放日集锦：清华、南大、浙大等陆续公布日程</h3>
+          <p class="news-summary">面向高中生与大学生的实验室开放活动密集举行，研究所导航后续将整理开放日日历，方便读者集中查看。</p>
+        </article>
+        <article class="news-card">
+          <div class="news-date">2026-10-26</div>
+          <h3 class="news-title">科研机构导航工具需求上升，信息聚合价值被重新认识</h3>
+          <p class="news-summary">随着科研合作跨机构、跨地域趋势增强，类似研究所导航的索引型页面正在成为科研工作者的高频入口。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 页脚 ===== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>研究所导航</h3>
+          <p>科研机构一站式索引与资源聚合页面，帮助科研人员、考研学生、产业分析师快速定位目标研究所与研究方向。内容持续更新，欢迎收藏使用。</p>
+        </div>
+        <div class="footer-col">
+          <h4>快速导航</h4>
+          <ul>
+            <li><a href="/#hero-banner">首页</a></li>
+            <li><a href="/#hot-recommend">热门推荐</a></li>
+            <li><a href="/#latest-updates">最新动态</a></li>
+            <li><a href="/#category-entry">分类目录</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>内容板块</h4>
+          <ul>
+            <li><a href="/#deep-analysis">深度解析</a></li>
+            <li><a href="/#faq-section">常见问题</a></li>
+            <li><a href="/#user-comments">用户评论</a></li>
+            <li><a href="/#related-news">相关资讯</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>友情链接</h4>
+          <ul>
+            <li><a href="#">中国科学院官网</a></li>
+            <li><a href="#">中国社会科学院</a></li>
+            <li><a href="#">国家自然科学基金委</a></li>
+            <li><a href="#">中国科学技术信息研究所</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 研究所导航 · 内容仅供学习与参考</span>
+        <span>免责声明：本页面信息整理自公开渠道，不构成报考或合作建议，请以各机构官方发布为准。</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</body>
+  </html>
